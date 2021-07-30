@@ -1,25 +1,13 @@
 "use strict";
 
-// lesson01
-
-let money;
-let income;
-let addExpenses;
-let deposit;
-let mission;
-let period;
-
-alert('Hello world');
-console.log('Hello world');
-
 // lesson02
 
-money = 1000;
-income = 'freelance';
-addExpenses = 'Интернет, Такси, Коммуналка';
-deposit = true;
-mission = 2000;
-period = 6;
+const money = 1000;
+const income = 'freelance';
+const addExpenses = 'Интернет, Такси, Коммуналка';
+const deposit = true;
+const mission = 2000;
+const period = 6;
 
 console.log(typeof money);
 console.log(typeof income);
