@@ -25,8 +25,8 @@ let getExpensesMonth = function(cost1, cost2) {
   return cost1 + cost2;
 };
 
-let getAccumulatedMonth = function(budget, getAllCosts) {
-  return budget - getAllCosts;
+let getAccumulatedMonth = function(budget, allCosts) {
+  return budget - allCosts;
 };
 
 let accumulatedMonth = getAccumulatedMonth(money, getExpensesMonth(amount1, amount2));
