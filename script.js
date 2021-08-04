@@ -1,6 +1,6 @@
 "use strict";
 
-// lesson03
+// lesson04
 
 let money = +prompt('Ваш месячный доход?');
 const income = 'freelance';
@@ -13,7 +13,6 @@ let amount1 = +prompt('Во сколько это обойдется?');
 let expenses2 = prompt('Введите обязательную статью расходов?');
 let amount2 = +prompt('Во сколько это обойдется?');
 
-
 console.log(typeof money);
 console.log(typeof income);
 console.log(typeof deposit);
@@ -22,13 +21,23 @@ console.log('Период равен ' + period + ' месяцев');
 console.log('Цель заработать ' + mission + ' долларов');
 console.log(addExpenses.toLowerCase().split(', '));
 
-let budgetMonth = money - amount1 - amount2;
-console.log(budgetMonth);
+let getExpensesMonth = function(cost1, cost2) {
+  return cost1 + cost2;
+};
 
-let missionMounth = Math.ceil(mission / budgetMonth);
-console.log(missionMounth);
+let getAccumulatedMonth = function(budget, getAllCosts) {
+  return budget - getAllCosts;
+};
 
-let budgetDay = budgetMonth / 30;
+let accumulatedMonth = getAccumulatedMonth(money, getExpensesMonth(amount1, amount2));
+console.log(accumulatedMonth);
+
+let getTargetMonth = function(target) {
+  return Math.ceil(target / accumulatedMonth);
+};
+console.log(getTargetMonth(60000));
+
+let budgetDay = accumulatedMonth / 30;
 console.log(budgetDay);
 
 if (budgetDay >= 1200) {
