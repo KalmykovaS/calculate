@@ -13,9 +13,6 @@ let deposit = confirm('Есть ли у вас депозит в банке?');
 const mission = 60000;
 const period = 6;
 let expenses = [];
-// let expenses2 = prompt('Введите обязательную статью расходов?');
-// let amount2 = +prompt('Во сколько это обойдется?');
-
 
 let showTypeOff = function(item) {
   console.log(typeof item);
