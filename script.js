@@ -108,6 +108,8 @@ console.log('За какой период будет достигнута цел
 console.log('Уровень дохода: ' + appData.getStatusIncome());
 
 console.log('Наша программа включает в себя данные:');
+//key - имя свойства, которое назначается каждой переменной
+//appData[key] - выводит значение свойства
 for (let key in appData) {
   console.log(key + ':' + appData[key]);
 }
