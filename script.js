@@ -59,7 +59,6 @@ let appData = {
 };
 
 appData.asking();
-console.log(appData.expenses);
 
 //функция при помощи цикла for...in проходит по всем ключам объекта и выводит сумму каждого, а потом суммирует
 appData.getExpensesMonth = function() {
@@ -71,39 +70,42 @@ appData.getExpensesMonth = function() {
 
   return sum;
 };
+appData.getExpensesMonth();
 
 //функция считает свободные деньги за месяц (доход - расходы)
 appData.getBudget = function() {
-  return money - appData.getExpensesMonth();
+  appData.budgetMonth = money - appData.getExpensesMonth();
+  appData.budgetDay = appData.budgetMonth / 30;
 };
-console.log(appData.getBudget());
+appData.getBudget();
 
 //функция с условием вывода сообщения, в зависимости от того когда будет выполнена цель по накоплениям
 appData.getTargetMonth = function() {
   if (appData.mission > 0) {
-    return 'Цель будет достигнута за ' + Math.ceil(appData.mission / appData.getBudget()) + ' месяца';
+    return 'Цель будет достигнута за ' + Math.ceil(appData.mission / appData.budgetMonth) + ' месяца';
   } else {
     return 'Цель не будет достигнута';
   }
 };
+console.log(appData.getTargetMonth());
 
 //функция содержит условия для вывода сообщений об уровне дохода
 appData.getStatusIncome = function() {
   if (appData.budgetDay >= 1200) {
-    return console.log('У вас высокий уровень дохода');
+    return 'У вас высокий уровень дохода';
   } else if (appData.budgetDay >= 600 || appData.budgetDay < 1200) {
-    return console.log('У вас средний уровень дохода');
+    return 'У вас средний уровень дохода';
   } else if (appData.budgetDay < 600 || appData.budgetDay >= 0) {
-    return console.log('К сожалению у вас уровень дохода ниже среднего');
+    return 'К сожалению у вас уровень дохода ниже среднего';
   } else {
-    return console.log('Что то пошло не так');
+    return 'Что то пошло не так';
   }
 };
 appData.getStatusIncome();
 
 console.log('Расходы за месяц: ' + appData.getExpensesMonth());
 console.log('За какой период будет достигнута цель (в месяцах): ' + appData.getTargetMonth(60000));
-console.log('Уровень дохода' + appData.getStatusIncome());
+console.log('Уровень дохода: ' + appData.getStatusIncome());
 
 console.log('Наша программа включает в себя данные:');
 for (let key in appData) {
