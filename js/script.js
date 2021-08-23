@@ -1,6 +1,6 @@
 "use strict";
 
-// lesson09
+// lesson10
 
 /* функция проверяет вводимое нами число на isNaN (проверяет является ли переменная нечисловым значением (Nan), перед эти parseFloat переводит строку в число(если это возможно), !(не) конвертирует ответ в true, если это число) и isFinite (является ли переданное значение конечным числом, если оно не бесконечное возвращается true, если бесконечное - false). Return передает true (если это число и оно конечно) либо false */
 let isNumber = function(n) {
@@ -180,26 +180,28 @@ for (let key in appData) {
     console.log(key, appData[key]);
 }
 
-const startButton = document.getElementById('start');
-const incomeButton = document.getElementsByTagName('button')[0];
-const expensesButton = document.getElementsByTagName('button')[1];
-const depositCheck = document.querySelector('#deposit-check');
+//DOM
 
-const additionalIncome = document.querySelector('.additional_income');
-const additionalIncomeFields = additionalIncome.querySelectorAll('.additional_income-item');
+// const startButton = document.getElementById('start');
+// const incomeButton = document.getElementsByTagName('button')[0];
+// const expensesButton = document.getElementsByTagName('button')[1];
+// const depositCheck = document.querySelector('#deposit-check');
 
-const budgetDayValue = document.getElementsByClassName('budget_day-value')[0];
-const expensesMonthValue = document.getElementsByClassName('expenses_month-value')[0];
-const additionalIncomeValue = document.getElementsByClassName('additional_income-value')[0];
-const additionalExpensesValue = document.getElementsByClassName('additional_expenses-value')[0];
-const incomePeriodValue = document.getElementsByClassName('income_period-value')[0];
-const targetMonthValue = document.getElementsByClassName('target_month-value')[0];
+// const additionalIncome = document.querySelector('.additional_income');
+// const additionalIncomeFields = additionalIncome.querySelectorAll('.additional_income-item');
 
-const salaryAmount = document.querySelector('.salary-amount');
-const incomeTitle = document.querySelector('input.income-title');
-const incomeAmount = document.querySelector('input.income-amount');
-const expensesTitle = document.querySelector('input.expenses-title');
-const expensesAmount = document.querySelector('input.expenses-amount');
-const additionalExpensesItem = document.querySelector('.additional_expenses-item');
-const targetAmount = document.querySelector('.target-amount');
-const periodSelect = document.querySelector('.period-select');
+// const budgetDayValue = document.getElementsByClassName('budget_day-value')[0];
+// const expensesMonthValue = document.getElementsByClassName('expenses_month-value')[0];
+// const additionalIncomeValue = document.getElementsByClassName('additional_income-value')[0];
+// const additionalExpensesValue = document.getElementsByClassName('additional_expenses-value')[0];
+// const incomePeriodValue = document.getElementsByClassName('income_period-value')[0];
+// const targetMonthValue = document.getElementsByClassName('target_month-value')[0];
+
+// const salaryAmount = document.querySelector('.salary-amount');
+// const incomeTitle = document.querySelector('input.income-title');
+// const incomeAmount = document.querySelector('input.income-amount');
+// const expensesTitle = document.querySelector('input.expenses-title');
+// const expensesAmount = document.querySelector('input.expenses-amount');
+// const additionalExpensesItem = document.querySelector('.additional_expenses-item');
+// const targetAmount = document.querySelector('.target-amount');
+// const periodSelect = document.querySelector('.period-select');
