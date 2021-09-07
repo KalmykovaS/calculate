@@ -37,6 +37,17 @@ let targetAmount = document.querySelector('.target-amount');
 let periodSelect = document.querySelector('.period-select');
 let periodAmount = document.querySelector('.period-amount');
 
+startButton.setAttribute('disabled', 'disabled');
+startButton.style.opacity = '0.7';
+salaryAmount.addEventListener('input', function() {
+    if (salaryAmount.value.trim() !== '') {
+        startButton.removeAttribute('disabled');
+        startButton.style.opacity = '';
+    } else {
+        alert('Введите месячный доход!');
+    }
+});
+
 let appData = {
     budget: 0,
     budgetDay: 0,
@@ -59,10 +70,10 @@ let appData = {
     //функция задает при помощи prompt вопрос и если пользователь ввел не число перезапускает цикл
     start: function() {
 
-        if (salaryAmount.value === '') {
-            alert('Внимание, ошибочка вышла!');
-            return;
-        }
+        // if (salaryAmount.value === '') {
+        //     alert('Внимание, ошибочка вышла!');
+        //     return;
+        // }
 
         // do {
         //     money = prompt('Ваш месячный доход?');
@@ -92,8 +103,8 @@ let appData = {
         additionalIncomeValue.value = appData.addIncome.join(', ');
         targetMonthValue.value = Math.ceil(appData.getTargetMonth());
         incomePeriodValue.value = appData.calcPeriod();
-        periodSelect.addEventListener('change', function() {
-            incomePeriodValue.value.innerHTML = periodSelect.value;
+        periodSelect.addEventListener('input', function() {
+            incomePeriodValue.value = appData.calcPeriod();
         });
     },
     // добавляем еще одно значение наименование и сумма для "Обязательные расходы"
