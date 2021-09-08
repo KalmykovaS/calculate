@@ -104,7 +104,7 @@ let appData = {
         targetMonthValue.value = Math.ceil(appData.getTargetMonth());
         incomePeriodValue.value = appData.calcPeriod();
         periodSelect.addEventListener('input', function() {
-            incomePeriodValue.value = appData.calcPeriod();
+            incomePeriodValue.value = +appData.calcPeriod();
         });
     },
     // добавляем еще одно значение наименование и сумма для "Обязательные расходы"
@@ -238,7 +238,6 @@ let appData = {
         // }
     },
     //функция при помощи цикла for...in проходит по всем ключам объекта и выводит сумму каждого, а потом суммирует
-    //НЕ РАБОТАЕТ
     getExpensesMonth: function() {
         let sum = 0;
 
