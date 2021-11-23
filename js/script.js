@@ -29,12 +29,24 @@ let targetMonthValue = document.getElementsByClassName('target_month-value')[0];
 
 let salaryAmount = document.querySelector('.salary-amount');
 let incomeTitle = document.querySelector('input.income-title');
-let incomeItem = document.querySelectorAll('.income-items');
+let incomeItems = document.querySelectorAll('.income-items');
 let expensesTitle = document.querySelector('input.expenses-title');
 let expensesItems = document.querySelectorAll('.expenses-items');
 let additionalExpensesItem = document.querySelector('.additional_expenses-item');
 let targetAmount = document.querySelector('.target-amount');
 let periodSelect = document.querySelector('.period-select');
+let periodAmount = document.querySelector('.period-amount');
+
+startButton.setAttribute('disabled', 'disabled');
+startButton.style.opacity = '0.7';
+salaryAmount.addEventListener('input', function() {
+    if (salaryAmount.value.trim() !== '') {
+        startButton.removeAttribute('disabled');
+        startButton.style.opacity = '';
+    } else {
+        alert('Введите месячный доход!');
+    }
+});
 
 let appData = {
     budget: 0,
@@ -58,16 +70,6 @@ let appData = {
     //функция задает при помощи prompt вопрос и если пользователь ввел не число перезапускает цикл
     start: function() {
 
-        if(salaryAmount.value === '') {
-            alert('Внимание, ошибочка вышла!');
-            return;
-        }
-
-        // do {
-        //     money = prompt('Ваш месячный доход?');
-        // }
-        // while (!isNumber(money));
-
         appData.budget = +salaryAmount.value;
         console.log(salaryAmount.value);
 
@@ -78,19 +80,22 @@ let appData = {
         appData.getAddIncome();
         appData.getStatusIncome();
         appData.getInfoDeposit();
-        
+
         appData.getBudget();
 
         appData.showResult();
     },
     showResult: function() {
         budgetMonthValue.value = appData.budgetMonth;
-        budgetDayValue.value = appData.budgetDay;
+        budgetDayValue.value = Math.ceil(appData.budgetDay);
         expensesMonthValue.value = appData.expensesMonth;
         additionalExpensesValue.value = appData.addExpenses.join(', ');
         additionalIncomeValue.value = appData.addIncome.join(', ');
         targetMonthValue.value = Math.ceil(appData.getTargetMonth());
         incomePeriodValue.value = appData.calcPeriod();
+        periodSelect.addEventListener('input', function() {
+            incomePeriodValue.value = +appData.calcPeriod();
+        });
     },
     // добавляем еще одно значение наименование и сумма для "Обязательные расходы"
     addExpensesBlock: function() {
@@ -103,6 +108,17 @@ let appData = {
             expensesButton.style.display = 'none';
         }
     },
+    addIncomeBlock: function() {
+        let cloneIncomeItem = incomeItems[0].cloneNode(true);
+        incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomeButton);
+
+        incomeItems = document.querySelectorAll('.income-items');
+
+        if (incomeItems.length === 3) {
+            incomeButton.style.display = 'none';
+        }
+    },
+
     getExpenses: function() {
         expensesItems.forEach(function(item) {
             let itemExpenses = item.querySelector('.expenses-title').value;
@@ -115,27 +131,14 @@ let appData = {
     },
     //сделать также как в getExpenses
     getIncome: function() {
-        if (confirm('Есть ли у вас дополнительный заработок?')) {
-            let itemIncome;
-            let cashIncome;
-            let onlyDigits = false;
+        incomeItems.forEach(function(item) {
+            let itemIncome = item.querySelector('.income-title').value;
+            let cashIncome = item.querySelector('.income-amount').value;
 
-            do {
-                itemIncome = prompt('Какой у вас дополнительный заработок', 'Фриланс');
-                //если у нас получается число, то мы выходим из цикла
-                onlyDigits = isNumber(itemIncome);
+            if (itemIncome !== '' && cashIncome !== '') {
+                appData.income[itemIncome] = cashIncome;
             }
-            //если itemIncome содержит только цифры или явл. пустой строкой - выполняем цикл
-            while (onlyDigits || !isNotEmptyString(itemIncome));
-
-            do {
-                cashIncome = prompt('Сколько в месяц вы зарабатываете на этом?', 10000);
-            }
-            while (!isNumber(cashIncome));
-
-            //передаем новое свойство в объект income
-            appData.income[itemIncome] = parseFloat(cashIncome);
-        }
+        });
 
         for (let key in appData.income) {
             appData.incomeMounth += +appData.income[key];
@@ -161,48 +164,7 @@ let appData = {
             }
         });
     },
-    //вопросы пользователю
-    asking: function() {
-        //получаем дополнительный заработок, при отмене на confirm переходит сразу к след. вопросу
-
-        // let addExpensesRaw = prompt('Перечислите возможные расходы за рассчитываемый период через запятую',
-        //     'Квартплата, проездной, кредит');
-        // //пишем название объекта, для того,чтобы сразу записать его в ключ addExpenses
-        // let addExpenses = addExpensesRaw.toLowerCase().split(', ');
-        // // .map( str => str.charAt(0).toUpperCase() + str.slice(1));
-
-        // for (let i = 0; i < addExpenses.length; i++) {
-        //     let str = addExpenses[i];
-        //     addExpenses[i] = str.charAt(0).toUpperCase() + str.slice(1);
-        // }
-
-        // appData.addExpenses = addExpenses;
-        // appData.deposit = confirm('Есть ли у вас депозит в банке?');
-
-        //чтобы в цикле все отработало тогда когда нужно, сначала создаем пустые переменные, а потом вкладываем в них значение (заменили на getExpenses)
-        // for (let i = 0; i < 2; i++) {
-        //     let key;
-        //     let value;
-        //     let onlyDigits = false;
-
-        //     do {
-        //         key = prompt('Введите обязательную статью расходов?');
-        //         //если у нас получается число, то мы выходим из цикла
-        //         onlyDigits = isNumber(key);
-        //     }
-        //     //если itemIncome содержит только цифры или явл. пустой строкой - выполняем цикл
-        //     while (onlyDigits || !isNotEmptyString(key));
-
-        //     do {
-        //         value = prompt('Во сколько это обойдется?');
-        //     }
-        //     while (!isNumber(value));
-
-        //     appData.expenses[key] = parseFloat(value);
-        // }
-    },
     //функция при помощи цикла for...in проходит по всем ключам объекта и выводит сумму каждого, а потом суммирует
-    //НЕ РАБОТАЕТ
     getExpensesMonth: function() {
         let sum = 0;
 
@@ -219,11 +181,6 @@ let appData = {
     },
     //функция с условием вывода сообщения, в зависимости от того когда будет выполнена цель по накоплениям
     getTargetMonth: function() {
-        // if (appData.mission > 0) {
-        //     return 'Цель будет достигнута за ' + Math.ceil(appData.mission / appData.budgetMonth) + ' месяца';
-        // } else {
-        //     return 'Цель не будет достигнута';
-        // }
         return targetAmount.value / appData.budgetMonth;
     },
     //функция содержит условия для вывода сообщений об уровне дохода
@@ -263,11 +220,10 @@ let appData = {
 
 startButton.addEventListener('click', appData.start);
 expensesButton.addEventListener('click', appData.addExpensesBlock);
-
-console.log('Расходы за месяц: ' + appData.getExpensesMonth());
-console.log('За какой период будет достигнута цель (в месяцах): ' + appData.getTargetMonth(60000));
-console.log('Уровень дохода: ' + appData.getStatusIncome());
-console.log(appData.addExpenses.join(', '));
+incomeButton.addEventListener('click', appData.addIncomeBlock);
+periodSelect.addEventListener('input', function() {
+    periodAmount.innerHTML = periodSelect.value;
+});
 
 console.log('Наша программа включает в себя данные:');
 //key - имя свойства, которое назначается каждой переменной
