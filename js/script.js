@@ -95,21 +95,6 @@ let appData = {
         startButton.remove();
         resetButton.style = 'display: block';
     },
-    reset: function() {
-        this.budget.value = '';
-
-        this.budgetDaybudget.value = '';
-        this.budgetMonth.value = '';
-        this.expensesMonthbudget.value = '';
-        this.incomebudget.value = '';
-        this.incomeMounthbudget.value = '';
-        this.addIncome.value = '';
-        this.expensesbudget.value = '';
-        this.addExpensesbudget.value = '';
-        this.depositbudget.value = '';
-        this.percentDepositbudget.value = '';
-        this.moneyDepositbudget.value = '';
-    },
     showResult: function() {
         budgetMonthValue.value = appData.budgetMonth;
         budgetDayValue.value = Math.ceil(appData.budgetDay);
@@ -244,7 +229,6 @@ let appData = {
 };
 
 startButton.addEventListener('click', appData.start.bind(appData));
-resetButton.addEventListener('click', appData.reset.bind(appData));
 expensesButton.addEventListener('click', appData.addExpensesBlock);
 incomeButton.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', function() {
