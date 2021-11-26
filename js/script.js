@@ -12,9 +12,12 @@ let isNotEmptyString = function(value) {
 };
 
 const startButton = document.getElementById('start');
+const resetButton = document.getElementById('cancel');
 const incomeButton = document.getElementsByTagName('button')[0];
 const expensesButton = document.getElementsByTagName('button')[1];
 const depositCheck = document.querySelector('#deposit-check');
+const data = document.querySelector('.data');
+const calc = document.querySelector('.calc');
 
 const additionalIncome = document.querySelector('.additional_income');
 const additionalIncomeItem = additionalIncome.querySelectorAll('.additional_income-item');
@@ -70,20 +73,27 @@ let appData = {
     //функция задает при помощи prompt вопрос и если пользователь ввел не число перезапускает цикл
     start: function() {
 
-        appData.budget = +salaryAmount.value;
+        this.budget = +salaryAmount.value;
         console.log(salaryAmount.value);
 
-        appData.getExpenses();
-        appData.getIncome();
-        appData.getExpensesMonth();
-        appData.getAddExpenses();
-        appData.getAddIncome();
-        appData.getStatusIncome();
-        appData.getInfoDeposit();
+        this.getExpenses();
+        this.getIncome();
+        this.getExpensesMonth();
+        this.getAddExpenses();
+        this.getAddIncome();
+        this.getStatusIncome();
+        this.getInfoDeposit();
 
-        appData.getBudget();
+        this.getBudget();
 
-        appData.showResult();
+        this.showResult();
+
+        data.querySelectorAll('input[type=text]').forEach((element) => {
+            element.setAttribute("readonly", "readonly");
+        });
+        
+        startButton.remove();
+        resetButton.style = 'display: block';
     },
     showResult: function() {
         budgetMonthValue.value = appData.budgetMonth;
@@ -218,7 +228,7 @@ let appData = {
     }
 };
 
-startButton.addEventListener('click', appData.start);
+startButton.addEventListener('click', appData.start.bind(appData));
 expensesButton.addEventListener('click', appData.addExpensesBlock);
 incomeButton.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', function() {
